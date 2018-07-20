@@ -23,7 +23,10 @@ class App extends Component {
             <Fragment>
               <button onClick={toggle}>Login</button>
               <Modal on={on} toggle={toggle}>
-                <h1>Still In Toggle</h1>
+                <h1>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi impedit est magni
+                  similique, molestiae suscipit possimus neque obcaecati cupiditate temporibus.
+                </h1>
               </Modal>
             </Fragment>
           )}
