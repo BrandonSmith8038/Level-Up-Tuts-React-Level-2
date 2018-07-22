@@ -1,34 +1,13 @@
-import React, { Component, Fragment, createContext } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Modal } from 'Elements';
 import { Toggle } from 'Utilities';
-import { UserContext } from './UserContext';
+import UserProvider from './UserProvider';
+import { Transition } from 'react-spring';
+import { Card } from 'Elements/Cards';
+
 import User from './User';
 import logo from './logo.svg';
 import './App.css';
-
-class UserProvider extends Component {
-  state = {
-    id: '123',
-    name: 'Brandon',
-    email: 'Brandon@gmail.com',
-  };
-
-  logout = () => {
-    this.setState({
-      id: null,
-      name: '',
-      email: '',
-    });
-  };
-
-  render() {
-    return (
-      <UserContext.Provider value={{ user: this.state, logout: this.logout }}>
-        {this.props.children}
-      </UserContext.Provider>
-    );
-  }
-}
 
 class App extends Component {
   render() {
@@ -40,6 +19,18 @@ class App extends Component {
             <h1 className="App-title">Welcome to React</h1>
           </header>
           <User />
+          <section>
+            <Toggle>
+              {({ on, toggle }) => (
+                <Fragment>
+                  <button onClick={toggle}>Show / Hide</button>
+                  <Transition from={{ opacity: 0 }} enter={{ opacity: 1 }} leave={{ opacity: 0 }}>
+                    {on && Header}
+                  </Transition>
+                </Fragment>
+              )}
+            </Toggle>
+          </section>
           <Toggle>
             {({ on, toggle }) => (
               <Fragment>
@@ -58,5 +49,11 @@ class App extends Component {
     );
   }
 }
+
+const Header = styles => (
+  <Card style={{ ...styles }}>
+    <h1>Show Me</h1>
+  </Card>
+);
 
 export default App;
