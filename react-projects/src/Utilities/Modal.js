@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Portal from './Portal';
-import Icon from './Utilities/Icon';
+import Icon from './Icon';
 
 export default class Modal extends Component {
   render() {
@@ -54,7 +54,9 @@ const CloseButton = styled.button`
   border: none;
   background: transparent;
   padding: 10px;
+  cursor: pointer;
 `;
+
 const Background = styled.div`
   position: absolute;
   width: 100%;
