@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Portal, absolute } from 'Utilities';
-import { Transition } from 'react-spring';
+import { Transition, animated, config } from 'react-spring';
 import { Card } from 'Elements/Cards';
 import Icon from 'Elements/Icon';
 
@@ -11,6 +11,8 @@ export default class Modal extends Component {
     return (
       <Portal>
         <Transition
+          native
+          config={config.gentle}
           from={{ opacity: 0, bgOpacity: 0, y: -50 }}
           enter={{ opacity: 1, bgOpacity: 0.5, y: 0 }}
           leave={{ opacity: 0, bgOpacity: 0, y: 50 }}
@@ -18,13 +20,22 @@ export default class Modal extends Component {
           {on &&
             (styles => (
               <ModalWrapper>
-                <ModalCard style={{ transform: `translate3d(0, ${styles.y}px, 0)`, ...styles }}>
+                <ModalCard
+                  style={{
+                    transform: styles.y.interpolate(y => `translate3d(0, ${y}px, 0)`),
+
+                    ...styles,
+                  }}
+                >
                   <CloseButton onClick={toggle}>
                     <Icon name="close" />
                   </CloseButton>
                   <div>{children}</div>
                 </ModalCard>
-                <Background style={{ opacity: styles.bgOpacity }} onClick={toggle} />
+                <Background
+                  style={{ opacity: styles.bgOpacity.interpolate(bgOpacity => bgOpacity) }}
+                  onClick={toggle}
+                />
               </ModalWrapper>
             ))}
         </Transition>
@@ -42,7 +53,9 @@ const ModalWrapper = styled.div`
   align-items: center;
 `;
 
-const ModalCard = Card.extend`
+const AnimCard = Card.withComponent(animated.div);
+
+const ModalCard = AnimCard.extend`
   position: relative;
   z-index: 10;
   width: 80%;
@@ -61,7 +74,7 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const Background = styled.div`
+const Background = styled(animated.div)`
   ${absolute({})};
   width: 100%;
   height: 100%;
