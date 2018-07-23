@@ -10,7 +10,7 @@ const DragCard = AnimCard.extend`
   height: 300px;
 `;
 
-const CardContainer = styled.div`
+const CardContainer = styled(animated.div)`
   position: relative;
   background: #ccc;
   max-width: 320px;
@@ -30,9 +30,22 @@ export default class Drag extends Component {
             immediate={name => down && name === 'x'}
           >
             {({ x }) => (
-              <CardContainer>
+              <CardContainer
+                style={{
+                  background: x.interpolate({
+                    range: [-300, 300],
+                    output: ['#FF1c68', '#14D790'],
+                    extrapolate: 'clamp',
+                  }),
+                }}
+              >
                 <DragCard
                   style={{
+                    opacity: x.interpolate({
+                      range: [-300, -100],
+                      output: [0, 1],
+                      extrapolate: 'clamp',
+                    }),
                     transform: interpolate(
                       [
                         x,
