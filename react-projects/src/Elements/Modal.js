@@ -47,8 +47,6 @@ const CloseButton = styled.button`
     y: 'top',
     x: 'right',
   })};
-  top: 0;
-  right: 0;
   border: none;
   background: transparent;
   padding: 10px;
