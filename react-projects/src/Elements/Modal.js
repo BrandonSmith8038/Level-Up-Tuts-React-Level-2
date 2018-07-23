@@ -58,7 +58,6 @@ const AnimCard = Card.withComponent(animated.div);
 const ModalCard = AnimCard.extend`
   position: relative;
   z-index: 10;
-  width: 80%;
   min-width: 320px;
   margin-bottom: 300px;
 `;
